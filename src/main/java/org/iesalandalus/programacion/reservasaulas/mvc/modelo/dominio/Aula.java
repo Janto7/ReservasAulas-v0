@@ -12,7 +12,7 @@ public class Aula {
 
 	public Aula(Aula aula) {
 		if (aula == null) {
-			throw new IllegalArgumentException("No se puede copiar un aula nula.");
+			throw new NullPointerException("ERROR: No se puede copiar un aula nula.");
 		}
 
 		setNombre(aula.getNombre());
@@ -24,17 +24,15 @@ public class Aula {
 
 	private void setNombre(String nombre) {
 		if (nombre == null) {
-			throw new IllegalArgumentException("El nombre del aula no puede ser nulo.");
+			throw new NullPointerException("ERROR: El nombre del aula no puede ser nulo.");
 		}
-		
+
 		if (nombre.trim().isEmpty()) {
-			throw new IllegalArgumentException("El nombre del aula no puede estar vacío.");
-			
+			throw new IllegalArgumentException("ERROR: El nombre del aula no puede estar vacío.");
+
 		}
 		this.nombre = nombre;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -55,8 +53,7 @@ public class Aula {
 
 	@Override
 	public String toString() {
-		return "[nombre=" + nombre + "]";
+		return "nombre Aula=" + getNombre();
 	}
 
 }
-
