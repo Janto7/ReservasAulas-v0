@@ -6,7 +6,7 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Profesor;
 
 public class Profesores {
 
-	// Definimos un array de Profesor llamado coleccionProfesores.
+	// -----> coleccionProfesores (0...*)
 	private Profesor[] coleccionProfesores;
 	// Tamaño del array
 	private int tamano;

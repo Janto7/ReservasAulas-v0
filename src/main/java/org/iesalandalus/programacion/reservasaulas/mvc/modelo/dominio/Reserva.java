@@ -3,9 +3,11 @@ package org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio;
 import java.util.Objects;
 
 public class Reserva {
-
+	// -----> profesor (0,1)
 	private Profesor profesor;
+	// -----> aula (0,1)
 	private Aula aula;
+	// -----> permanencia (0,1)
 	private Permanencia permanencia;
 
 	public Reserva(Profesor profesor, Aula aula, Permanencia permanencia) {

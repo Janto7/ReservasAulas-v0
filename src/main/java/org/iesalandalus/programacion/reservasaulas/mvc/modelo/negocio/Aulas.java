@@ -6,7 +6,7 @@ import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Aula;
 
 public class Aulas {
 
-	// Definimos un array de Aula llamado coleccionAulas.
+	// -----> coleccionAulas (0...*)
 	private Aula[] coleccionAulas;
 	// Tamaño del array
 	private int tamano;

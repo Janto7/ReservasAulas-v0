@@ -2,14 +2,13 @@ package org.iesalandalus.programacion.reservasaulas.mvc.modelo.negocio;
 
 import javax.naming.OperationNotSupportedException;
 
-import org.apache.commons.math3.exception.NullArgumentException;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Aula;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Permanencia;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Profesor;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.dominio.Reserva;
 
 public class Reservas {
-	// Definimos un array de Reserva llamado coleccionReservas.
+	// -----> coleccionReservas (0...*)
 	private Reserva[] coleccionReservas;
 	// Tamaño del array
 	private int tamano;
@@ -209,7 +208,8 @@ public class Reservas {
 		}
 
 		for (int i = 0; !tamanoSuperado(i); i++) {
-			if (aula.equals(coleccionReservas[i].getAula()) && permanencia.equals(coleccionReservas[i].getPermanencia())) {
+			if (aula.equals(coleccionReservas[i].getAula())
+					&& permanencia.equals(coleccionReservas[i].getPermanencia())) {
 				disponible = false;
 			}
 

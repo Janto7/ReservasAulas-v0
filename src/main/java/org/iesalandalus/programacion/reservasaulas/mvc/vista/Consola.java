@@ -23,6 +23,7 @@ public class Consola {
 	}
 
 	public static void mostrarCabecera(String mensaje) {
+		
 		System.out.printf("%n%s%n", mensaje);
 		String formatoStr = "%0" + mensaje.length() + "d%n";
 		System.out.println(String.format(formatoStr, 0).replace("0", "-"));

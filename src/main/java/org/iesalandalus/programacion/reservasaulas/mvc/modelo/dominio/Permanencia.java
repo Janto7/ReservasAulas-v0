@@ -7,6 +7,7 @@ import java.util.Objects;
 public class Permanencia {
 
 	private LocalDate dia;
+	// -----> tramo (0,1)
 	private Tramo tramo;
 
 	protected static final DateTimeFormatter FORMATO_DIA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -66,7 +67,7 @@ public class Permanencia {
 
 	@Override
 	public String toString() {
-		return "dia=" + getDia().format(FORMATO_DIA) + ", tramo=" + getTramo() ;
+		return "dia=" + getDia().format(FORMATO_DIA) + ", tramo=" + getTramo();
 	}
 
 }
