@@ -59,7 +59,7 @@ public class Vista {
 		Consola.mostrarCabecera("Borrar Aula");
 		try {
 			controlador.borrarAula(Consola.leerAula());
-			System.out.println("Aula borrada satisfactoriamente.");
+			System.out.println("Aula borrada correctamente.");
 			/*
 			 * Capturamos las excepciones de la clase Aula y las del método borrar.
 			 */
@@ -73,7 +73,7 @@ public class Vista {
 		Aula aula;
 		try {
 			aula = controlador.buscarAula(Consola.leerAula());
-			String mensaje = (aula != null) ? aula.toString() : "No existe dicha aula.";
+			String mensaje = (aula != null) ? aula.toString() : "Aula no registrada en el sistema.";
 			System.out.println(mensaje);
 			/*
 			 * Capturamos las excepciones de la clase Aula y la del método buscar.
@@ -93,7 +93,7 @@ public class Vista {
 				System.out.println(aula);
 			}
 		} else {
-			System.out.println(ERROR + "No hay aulas que listar.Debe insertar primero un aula.");
+			System.out.println(ERROR + "No hay aulas que listar.Debe insertar primero un aula en el sistema.");
 		}
 	}
 
@@ -114,7 +114,7 @@ public class Vista {
 		Consola.mostrarCabecera("Borrar Profesor");
 		try {
 			controlador.borrarProfesor(Consola.leerProfesor());
-			System.out.println("Profesor borrado satisfactoriamente.");
+			System.out.println("Profesor borrado correctamente.");
 			/*
 			 * Capturamos las excepciones de la clase Profesor y las del método insertar.
 			 */
@@ -128,7 +128,8 @@ public class Vista {
 		Profesor profesor;
 		try {
 			profesor = controlador.buscarProfesor(Consola.leerProfesor());
-			String mensaje = (profesor != null) ? profesor.toString() : ERROR + "No existe dicho profesor.";
+			String mensaje = (profesor != null) ? profesor.toString()
+					: ERROR + "El profesor no está registrado en el sistema.";
 			System.out.println(mensaje);
 			/*
 			 * Capturamos las excepciones de la clase Profesor y la del método buscar.
@@ -147,7 +148,8 @@ public class Vista {
 				System.out.println(profesor);
 			}
 		} else {
-			System.out.println(ERROR + "No hay profesores que listar. Debe insertar primero un profesor.");
+			System.out
+					.println(ERROR + "No hay profesores que listar. Debe insertar primero un profesor en el sistema.");
 		}
 	}
 
@@ -167,7 +169,8 @@ public class Vista {
 	/*
 	 * Utilizo el método leerNombreProfesor de la clase Consola para realizar una
 	 * lectura de reserva limpia, donde solo se pidan los datos concretos para
-	 * realizar la reserva.
+	 * realizar la reserva.(Omitimos datos innecesarios como tener que introducir su
+	 * correo y teléfono, que ya estan registrados en el sistema)
 	 */
 	private Reserva leerReserva(Profesor profesor) {
 		Consola.mostrarCabecera("Realizar Reserva");
@@ -193,7 +196,7 @@ public class Vista {
 
 				/*
 				 * Comparo el nombre introducido por teclado, con el toString de profesores,
-				 * valiendome de los métodos indexof, que me extraen la cadena exacta necesito
+				 * valiendome de los métodos indexof(), que me extraen la cadena exacta necesito
 				 * comparar.
 				 */
 				if (nombreProfesor.equals(
@@ -217,7 +220,7 @@ public class Vista {
 			}
 			/*
 			 * Repito el mismo proceso para validar el aula existe en el sistema, esta vez
-			 * valiendome del método replace para qudarme con la cadena deseada.
+			 * valiendome del método replace() para quedarme con la cadena deseada.
 			 */
 			for (int j = 0; j < aulas.length; j++) {
 				if (aulas[j].toString().replace("nombre Aula=", "").equals(nombreAula)) {
@@ -317,10 +320,6 @@ public class Vista {
 		}
 	}
 
-	/*
-	 * Utilizo el método leerNombreAula para realizar una consulta limpia con solo
-	 * los datos necesarios para comprobar la disponibilidad.
-	 */
 	public void consultarDisponibilidad() {
 
 		Consola.mostrarCabecera("Consultar Disponibilidad");
