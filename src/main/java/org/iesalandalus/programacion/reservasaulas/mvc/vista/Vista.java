@@ -206,6 +206,7 @@ public class Vista {
 					/*
 					 * Obtengo el correo del profesor valiendome de los métodos indexOf y lastIndexOf, que me extraen la cadena
 					 * exacta del correo del profesor.
+					 *
 					 */
 					correoProfesor = datosProfesores.substring(datosProfesores.indexOf('=') + 1,
 							datosProfesores.lastIndexOf(','));
