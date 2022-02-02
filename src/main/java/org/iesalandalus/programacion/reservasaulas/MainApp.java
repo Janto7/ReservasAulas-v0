@@ -4,6 +4,9 @@ import org.iesalandalus.programacion.reservasaulas.mvc.controlador.Controlador;
 import org.iesalandalus.programacion.reservasaulas.mvc.modelo.Modelo;
 import org.iesalandalus.programacion.reservasaulas.mvc.vista.Vista;
 
+/*
+ * Author: José Antonio Del Rey Martínez, IES AL-ÁNDALUS, ALMERÍA
+ */
 public class MainApp {
 
 	public static void main(String[] args) {

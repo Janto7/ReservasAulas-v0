@@ -157,7 +157,7 @@ public class Vista {
 
 			Profesor profesor = null;
 			controlador.realizarReserva(leerReserva(profesor));
-			System.out.println("Reserva insertada correctamente." + NOMBRE_VALIDO + "/" + CORREO_VALIDO + ".");
+			System.out.println("Reserva insertada correctamente, " + NOMBRE_VALIDO + "/" + CORREO_VALIDO + ".");
 			// Capturamos todas las posibles excepciones al hacer una reserva
 		} catch (OperationNotSupportedException | IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
@@ -178,74 +178,74 @@ public class Vista {
 		String[] aulas = controlador.representarAulas();
 		String correoProfesor = new String();
 		String correoProfesorLimpio = new String();
-		String datosProfesor = new String();
+
 		Reserva reserva = null;
-		Aula aula;
+		Aula aula = null;
+		Permanencia permanencia = null;
+		boolean aulaRegistrada = false;
+		boolean profesorRegistrado = false;
 		try {
 			nombreProfesor = Consola.leerNombreProfesor();
 			nombreAula = Consola.leerNombreAula();
-			if (profesores.length > 0) {
 
-				for (int i = 0; i < profesores.length; i++) {
-					String datosProfesores = profesores[i].toString();
+			for (int i = 0; i < profesores.length; i++) {
+				String datosProfesores = profesores[i].toString();
+
+				/*
+				 * Comparo el nombre introducido por teclado, con el toString de profesores,
+				 * valiendome de los métodos indexof, que me extraen la cadena exacta necesito
+				 * comparar.
+				 */
+				if (nombreProfesor.equals(
+						datosProfesores.substring(datosProfesores.indexOf('=') + 1, datosProfesores.indexOf(',')))) {
+					profesorRegistrado = true;
+
 					/*
 					 * Comparo el nombre introducido por teclado, con el toString de profesores,
-					 * valiendome de los métodos indexof, que me extraen la cadena exacta necesito
-					 * comparar.
+					 * valiendome de los métodos indexOf y lastIndexOf, que me extraen la cadena
+					 * exacta del correo del profesor.
 					 */
-					if (nombreProfesor.equals(datosProfesores.substring(datosProfesores.indexOf('=') + 1,
-							datosProfesores.indexOf(',')))) {
-						datosProfesor = profesores[i].toString();
-						/*
-						 * Comparo el nombre introducido por teclado, con el toString de profesores,
-						 * valiendome de los métodos indexOf y lastIndexOf, que me extraen la cadena
-						 * exacta del correo del profesor.
-						 */
-						correoProfesor = datosProfesores.substring(datosProfesores.indexOf('=') + 1,
-								datosProfesores.lastIndexOf(','));
-						/*
-						 * elimino de la cadena los datos sobrantes para tener un correo limpio para
-						 * poder pasarlo por parametro.
-						 */
-						correoProfesorLimpio = correoProfesor.replace(nombreProfesor + ", correo=", "");
-						if (aulas.length > 0) {
-							for (int j = 0; j < aulas.length; j++) {
-
-								if (aulas[i].toString().replace("nombre Aula=", "").equals(nombreAula)) {
-									aula = new Aula(nombreAula);
-
-									Permanencia permanencia = new Permanencia(Consola.leerDia(), Consola.leerTramo());
-
-									Profesor profesorALeer = new Profesor(nombreProfesor, correoProfesorLimpio);
-
-									reserva = new Reserva(profesorALeer, aula, permanencia);
-
-								} else {
-									System.out.println(
-											ERROR + "No está registrada el aula " + nombreAula + " en el sistema.");
-								}
-							}
-						}
-					} else {
-						System.out.println(
-								ERROR + "No está registrado el profesor " + nombreProfesor + " en el sistema.");
-
-					}
+					correoProfesor = datosProfesores.substring(datosProfesores.indexOf('=') + 1,
+							datosProfesores.lastIndexOf(','));
+					/*
+					 * elimino de la cadena los datos sobrantes para tener un correo limpio para
+					 * poder pasarlo por parametro.
+					 */
+					correoProfesorLimpio = correoProfesor.replace(nombreProfesor + ", correo=", "");
 
 				}
+			}
+			/*
+			 * Repito el mismo proceso para validar el aula existe en el sistema, esta vez
+			 * valiendome del método replace para qudarme con la cadena deseada.
+			 */
+			for (int j = 0; j < aulas.length; j++) {
+				if (aulas[j].toString().replace("nombre Aula=", "").equals(nombreAula)) {
+					aula = new Aula(nombreAula);
+					aulaRegistrada = true;
 
-			} else {
-				System.out.println(ERROR + "No hay profesores en el sistema. Debe insertar primero un profesor.");
+				}
 			}
 
-			/*
-			 * Capturamos todas las posibles excepciones al leer la reserva,Clase
-			 * Permanencia, Profesores, Aula y Reserva
-			 */
+			if (!profesorRegistrado) {
+				System.out.println(ERROR + "No está registrado el profesor " + nombreProfesor + " en el sistema.");
+
+			} else if (!aulaRegistrada) {
+				System.out.println(ERROR + "No está registrada el aula" + nombreAula + " en el sistema.");
+
+			}
+
+			permanencia = new Permanencia(Consola.leerDia(), Consola.leerTramo());
+
+			Profesor profesorALeer = new Profesor(nombreProfesor, correoProfesorLimpio);
+
+			reserva = new Reserva(profesorALeer, aula, permanencia);
 		} catch (IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
+
 		return reserva;
+
 	}
 
 	public void anularReserva() {
@@ -256,7 +256,7 @@ public class Vista {
 
 			Profesor profesor = null;
 			controlador.anularReserva(leerReserva(profesor));
-			System.out.println("Reserva anulada correctamente.");
+			System.out.println("Reserva anulada correctamente, " + NOMBRE_VALIDO + CORREO_VALIDO + ".");
 			// Capturamos todas las posibles excepciones al anunlar la reserva
 		} catch (OperationNotSupportedException | IllegalArgumentException | NullPointerException e) {
 			System.out.println(e.getMessage());
@@ -329,33 +329,39 @@ public class Vista {
 		LocalDate dia;
 		Tramo tramo;
 
+		boolean aulaRegistrada = false;
+
 		try {
 
 			nombreAula = Consola.leerNombreAula();
-			if (aulas.length > 0) {
-				for (int i = 0; i < aulas.length; i++) {
+			// recorro el array
+			for (int i = 0; i < aulas.length; i++) {
+				/*
+				 * Comparo el nombre del aula este registrado en el sistema, utilizo el método
+				 * replace para conseguir la cadena deseada.
+				 */
+				if (aulas[i].toString().replace("nombre Aula=", "").equals(nombreAula)) {
+					aulaRegistrada = true;
 
-					if (aulas[i].toString().replace("nombre Aula=", "").equals(nombreAula)) {
-						Aula aulaAConsultar = new Aula(nombreAula);
-						dia = Consola.leerDia();
-						tramo = Consola.leerTramo();
-						Permanencia permanencia = new Permanencia(dia, tramo);
+					Aula aulaAConsultar = new Aula(nombreAula);
+					dia = Consola.leerDia();
+					tramo = Consola.leerTramo();
+					Permanencia permanencia = new Permanencia(dia, tramo);
 
-						if (controlador.consultarDisponibilidad(aulaAConsultar, permanencia) == true) {
-							System.out.println("Disponible el aula " + nombreAula + " para reservar el día " + dia
-									+ " en el tramo de " + tramo + ".");
-						} else {
-							System.out.println("No Disponible el aula " + nombreAula + " para reservar el día " + dia
-									+ " en el tramo de " + tramo + ".");
-						}
-
+					if (controlador.consultarDisponibilidad(aulaAConsultar, permanencia) == true) {
+						System.out.println("Disponible el aula " + nombreAula + " para reservar el día " + dia
+								+ " en el tramo de " + tramo + ".");
 					} else {
-						System.out.println(ERROR + "No está registrada el aula " + nombreAula + " en el sistema.");
+						System.out.println("No Disponible el aula " + nombreAula + " para reservar el día " + dia
+								+ " en el tramo de " + tramo + ".");
 					}
-				}
 
-			} else {
-				System.out.println(ERROR + "No hay aulas insertadas en el sistema. Debe insertar primero un aula.");
+				}
+			}
+
+			if (!aulaRegistrada) {
+				System.out.println(ERROR + "No está registrada el aula " + nombreAula + " en el sistema.");
+
 			}
 
 		} catch (IllegalArgumentException | NullPointerException e) {
